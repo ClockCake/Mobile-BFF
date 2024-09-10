@@ -1,5 +1,10 @@
 const express = require('express');
-const loginRouter = require('./login/login');
+const loginRouter = require('./login');
+const homeRouter = require('./home');
+const designerRouter = require('./designer');
+const casesRouter = require('./cases');
+const activityRouter = require('./activity');
+const articleRouter = require('./article');
 const errorHandler = require('./utils/errorHandler');
 const { ResponseBuilder,StatusCode} = require('./utils/response');
 
@@ -14,6 +19,17 @@ app.use((req, res, next) => {
 });
 // 登录模块
 app.use('/api/login', loginRouter);
+// 首页模块
+app.use('/api/home', homeRouter);
+// 设计师模块
+app.use('/api/designer', designerRouter);
+// 案例模块
+app.use('/api/cases', casesRouter);
+// 活动模块
+app.use('/api/activity', activityRouter);
+// 资讯模块
+app.use('/api/article', articleRouter);
+
 
 
   //未匹配的路由处理
