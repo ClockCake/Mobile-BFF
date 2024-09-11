@@ -122,3 +122,5 @@ router.get('/project/list', async (req, res, next) => {
         next(error);
     }
 });
+
+module.exports = router;
