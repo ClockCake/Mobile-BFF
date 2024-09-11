@@ -1,4 +1,5 @@
 const axios = require('axios');
+const querystring = require('querystring');
 
 // 创建 axios 实例
 const axiosClient = axios.create({
@@ -8,6 +9,10 @@ const axiosClient = axios.create({
 //   baseURL: "https://erf.zglife.com.cn/prod-api" //生产
   timeout: 10000, // 请求超时的时间（毫秒）
 });
+// 新增：buildPathUrl 函数（用于路径参数）
+function buildPathUrl(url, params) {
+  return Object.values(params).reduce((acc, val) => `${acc}/${val}`, url);
+}
 
 
 // // 添加请求拦截器
@@ -30,10 +35,7 @@ const axiosClient = axios.create({
 
 
 // 封装请求方法
-async function request(method, url, data = {}, headers = {}) {
-  // console.log(`Starting ${method.toUpperCase()} request to ${url}`);
-  
-  // 只保留 content-type header
+async function request(method, url, data = {}, headers = {}, urlBuilder = null) {
   const cleanedHeaders = {
     'content-type': headers['content-type'] || 'application/json',
     "terminalId": headers["terminalId"] || "ce5c98bea83e4d3289f3fc5f25c445a6",
@@ -48,8 +50,8 @@ async function request(method, url, data = {}, headers = {}) {
     };
 
     if (method.toLowerCase() === 'get') {
-      if (useParams) {
-        config.url = buildUrl(url, data);
+      if (urlBuilder) {
+        config.url = urlBuilder(url, data);
       } else {
         config.url = url;
         config.params = data;
@@ -75,7 +77,7 @@ async function request(method, url, data = {}, headers = {}) {
 // 添加便捷方法
 const httpClient = {
   get: (url, params, headers) => request('get', url, params, headers),
-  getWithParams: (url, params, headers) => request('get', url, params, headers, true),
+  getWithPath: (url, params, headers) => request('get', url, params, headers, buildPathUrl),
   post: (url, data, headers) => request('post', url, data, headers),
   put: (url, data, headers) => request('put', url, data, headers),
   delete: (url, data, headers) => request('delete', url, data, headers),

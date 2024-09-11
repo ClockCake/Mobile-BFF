@@ -1,10 +1,13 @@
 const express = require('express');
-const loginRouter = require('./login');
-const homeRouter = require('./home');
-const designerRouter = require('./designer');
-const casesRouter = require('./cases');
-const activityRouter = require('./activity');
-const articleRouter = require('./article');
+const loginRouter = require('./login'); // 登录模块
+const personalRouter = require('./personal'); // 个人中心模块
+const homeRouter = require('./home'); // 首页模块
+const designerRouter = require('./designer'); // 设计师模块
+const casesRouter = require('./cases');  // 案例模块
+const activityRouter = require('./activity'); // 活动模块
+const articleRouter = require('./article'); // 资讯模块
+const valuateRouter = require('./valuation');  // 估价模块
+const furnishRouter = require('./furnish'); // 装修日志模块
 const errorHandler = require('./utils/errorHandler');
 const { ResponseBuilder,StatusCode} = require('./utils/response');
 
@@ -19,6 +22,8 @@ app.use((req, res, next) => {
 });
 // 登录模块
 app.use('/api/login', loginRouter);
+// 个人中心模块
+app.use('/api/personal', personalRouter);
 // 首页模块
 app.use('/api/home', homeRouter);
 // 设计师模块
@@ -29,8 +34,10 @@ app.use('/api/cases', casesRouter);
 app.use('/api/activity', activityRouter);
 // 资讯模块
 app.use('/api/article', articleRouter);
-
-
+// 估价模块
+app.use('/api/valuation', valuateRouter);
+// 装修日志模块
+app.use('/api/furnish/logs', furnishRouter);
 
   //未匹配的路由处理
 app.use((req, res, next) => {
