@@ -1,5 +1,4 @@
 const axios = require('axios');
-const querystring = require('querystring');
 
 // 创建 axios 实例
 const axiosClient = axios.create({

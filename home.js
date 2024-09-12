@@ -4,7 +4,6 @@ const httpClient = require('./utils/axiosClient');
 
 // 字典映射
 router.get('/dict/:codes', async (req, res, next) => { 
-
     try{
         const rawData = await httpClient.getWithPath('/system/dict/data/types', {codes: req.params.codes}, req.headers);
         if (rawData.code == 200) {
@@ -17,6 +16,17 @@ router.get('/dict/:codes', async (req, res, next) => {
     }catch(error){
         next(error);
     }
+});
+
+//获取 首页 segment 数据
+router.get('/segment', async (req, res) => {
+    const arr = [
+        {title: '推荐', index: 0},
+        {title: '直播', index: 1},
+        {title: '装修', index: 2},
+        {title: '资讯', index: 3},
+    ]
+    res.json(ResponseBuilder.success(arr));
 });
 
 //// 获取首页banner

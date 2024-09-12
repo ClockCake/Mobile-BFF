@@ -1,7 +1,7 @@
 const { ResponseBuilder, StatusCode } = require('./response');
 const { AppError, BadRequestError } = require('./errors');
 
-function errorHandler(err, req, res, next) {
+function errorHandler(err, req, res) {
   console.error(err);
 
   // 设置默认状态码
