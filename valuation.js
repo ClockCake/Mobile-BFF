@@ -3,7 +3,7 @@ const { ResponseBuilder, StatusCode} = require('./utils/response');
 const httpClient = require('./utils/axiosClient');
 
 // 拉取整装套餐包
-router.get('/package/whole:types', async (req, res, next) => { 
+router.get('/packages/:types', async (req, res, next) => { 
 
     try{
         const rawData = await httpClient.getWithPath('/scm/customer/package/huiApp/noAuth/package/list', {types: req.params.types}, req.headers);
@@ -36,7 +36,7 @@ router.post('/quick/quote/whole', async (req, res, next) => {
 });
 
 // 拉取翻新套餐包列表
-router.get('/package/micro', async (req, res, next) => {
+router.get('/packages/micro', async (req, res, next) => {
     try{
         const rawData = await httpClient.get('/scm/customer/package/huiApp/noAuth/micro/package/list', req.query, req.headers);
         if (rawData.code == 200) {
@@ -67,7 +67,7 @@ router.post('/quick/quote/micro', async (req, res, next) => {
 });
 
 // 拉取软装风格列表
-router.get('/package/soft', async (req, res, next) => {
+router.get('/packages/soft', async (req, res, next) => {
   try{
     const rawData = await httpClient.get('/scm/customer/packageQuota/huiApp/noAuth/soft/suitableCase', req.query, req.headers);
     if (rawData.code == 200) {
