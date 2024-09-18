@@ -8,11 +8,12 @@ const axiosClient = axios.create({
 //   baseURL: "https://erf.zglife.com.cn/prod-api" //生产
   timeout: 10000, // 请求超时的时间（毫秒）
 });
+
+
 // 新增：buildPathUrl 函数（用于路径参数）
 function buildPathUrl(url, params) {
   return Object.values(params).reduce((acc, val) => `${acc}/${val}`, url);
 }
-
 
 // // 添加请求拦截器
 // axiosClient.interceptors.request.use(function (config) {

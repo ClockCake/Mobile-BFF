@@ -24,7 +24,7 @@ router.get('/hot/list', async (req, res, next) => {
         if (rawData.code == 200) {
             res.json(ResponseBuilder.success(rawData.data));
         }
-        else{
+        else{ 
             res.status(StatusCode.INTERNAL_SERVER_ERROR).json(ResponseBuilder.error(rawData.msg, rawData.code));
         }
     }catch(error){

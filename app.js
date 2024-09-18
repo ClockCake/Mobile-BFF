@@ -40,12 +40,12 @@ app.use('/api/valuation', valuateRouter);
 app.use('/api/furnish/logs', furnishRouter);
 
   //未匹配的路由处理
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(StatusCode.NOT_FOUND).json(ResponseBuilder.notFound('路由不存在'));
 });
 
 app.use(errorHandler);
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
     console.error(err.stack); // 打印错误堆栈信息到控制台（仅限开发阶段）
 
     // 设置响应状态码，如果错误对象中没有状态码，则默认使用 500
