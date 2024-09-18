@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { ResponseBuilder, StatusCode} = require('./utils/response');
 const httpClient = require('./utils/axiosClient');
+const multer = require('multer');
+const upload = multer(); // 使用内存存储引擎
 
 
 //个人中心-首页
@@ -29,6 +31,22 @@ router.get('/home', async (req, res, next) => {
         next(error);
     }
 });
+
+/// 修改个人信息
+router.put('/edit/info', async (req, res, next) => {
+    try{
+        const rawData = await httpClient.put('/product/customer/memberUser', req.body, req.headers);
+        if (rawData.code == 200) {
+            res.json(ResponseBuilder.success());
+        }
+        else{
+            res.status(StatusCode.INTERNAL_SERVER_ERROR).json(ResponseBuilder.error(rawData.msg, rawData.code));
+        }
+    }catch(error){
+        next(error);
+    }
+});
+
 // 收藏-商品
 router.get('/collection/goods', async (req, res, next) => {
     try{
@@ -121,4 +139,38 @@ router.get('/like/article', async (req, res, next) => {
     }
 });
 
+
+// 上传文件到 OSS
+router.post('/file/upload/oss', upload.single('file'), async (req, res, next) => {
+    try {
+        // 创建一个新的 FormData 对象
+        const formData = new FormData();
+
+        // 添加文件到 FormData
+        formData.append('file', req.file.buffer, {
+            filename: req.file.originalname,
+            contentType: req.file.mimetype,
+        });
+
+        // 获取所有的请求头
+        const headers = {
+            ...req.headers,
+            ...formData.getHeaders()
+        };
+
+        // 删除可能导致问题的头
+        delete headers['content-length'];
+        delete headers['host'];
+
+        // 发送请求到后端服务
+        const response = await httpClient.post('/file/upload/oss', formData, headers);
+
+        // 返回后端的响应
+        return res.json(ResponseBuilder.success(response.data));
+    } catch (error) {
+        next(error);
+    }
+});
+
+  
 module.exports = router;

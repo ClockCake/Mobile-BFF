@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-// 创建 axios 实例
-const axiosClient = axios.create({
+//后续如果 JWT 和 数据库需要中台对接 把这里的请求地址一起放到环境变量中
+const axiosClient = axios.create({  
  //  baseURL: "http://192.168.130.13/dev-api/bdj",  //本地
 //   baseURL: "https://mock.iweekly.top"    // Mock
      baseURL: "http://erf.gazo.net.cn:8087/test-api", //测试

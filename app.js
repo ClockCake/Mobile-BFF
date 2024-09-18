@@ -8,6 +8,7 @@ const activityRouter = require('./activity'); // 活动模块
 const articleRouter = require('./article'); // 资讯模块
 const valuateRouter = require('./valuation');  // 估价模块
 const furnishRouter = require('./furnish'); // 装修日志模块
+const constructionRouter = require('./construction'); // 在建工地模块
 const errorHandler = require('./utils/errorHandler');
 const { ResponseBuilder,StatusCode} = require('./utils/response');
 
@@ -38,6 +39,9 @@ app.use('/api/article', articleRouter);
 app.use('/api/valuation', valuateRouter);
 // 装修日志模块
 app.use('/api/furnish/logs', furnishRouter);
+// 在建工地模块
+app.use('/api/construction', constructionRouter);
+
 
   //未匹配的路由处理
 app.use((req, res) => {

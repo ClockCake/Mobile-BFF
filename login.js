@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { ResponseBuilder, StatusCode} = require('./utils/response');
 const httpClient = require('./utils/axiosClient');
 const { BadRequestError } = require('./utils/errors');
-const { defaultHandler, DefaultValueHandler } = require('./utils/defaultValueHandler');
+const { defaultHandler } = require('./utils/defaultValueHandler');
 
 
 // 发送验证码

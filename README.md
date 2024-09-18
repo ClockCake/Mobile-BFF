@@ -72,5 +72,9 @@ npm install
 ```bash
 npm run dev
 ```
+### 启动生产服务器
+```bash
+node app.js
+```
 
 
